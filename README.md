@@ -2,7 +2,8 @@
 
 A production-ready, full-stack collaborative application featuring a modern futuristic SaaS-style UI using deep dark themes, glowing borders, glassmorphism, responsive dashboard grids, and interactive Kanban boards.
 
----
+🌐 **Live API Backend**: `https://ethara-task-manager-production-298a.up.railway.app/api`
+
 
 ## 🛠️ Architecture & Tech Stack
 
@@ -97,20 +98,27 @@ The `npm run seed` command automatically loads the database with realistic SaaS 
 
 ## 🚀 Key Feature Spotlights
 
-### 1. Advanced Role-Based Access Control (RBAC)
-- **Admin Privilege**: Full CRUD capabilities. Only Admins can initialize/edit/delete projects, link collaborators, publish tasks, and swap user access roles.
-- **Member Restrictions**: Members can view project metrics and board columns but are restricted from modifications. On the Kanban board, members can **only** drag-and-drop or status-update tasks that are explicitly assigned to their user ID. Unassigned tasks or tasks assigned to other members will trigger access warnings.
+### 1. Advanced Role-Based Access Control (RBAC) & Smart Sign-up
+- **Dynamic First-User Admin**: The very first user registering on the platform automatically gets the **Admin** role, securing the initial deployment boot phase.
+- **Default Member Registration**: All subsequent user signups default to **Member** privileges. Members cannot self-promote; only an active **Admin** can toggle roles to promote a Member.
+- **Admin Privileges**: Full CRUD capabilities (create/edit projects, assign team members, delete tasks, change user roles, and clear audit history logs).
+- **Member Space**: Focused read-only view of projects. Members can track progress, update task statuses using drag-and-drop, and post comments on their cards, keeping execution clean and simplified.
 
-### 2. Automated Overdue Detection & Dashboards
-- Any task that has a `dueDate` in the past and is not marked as `Completed` is dynamically identified by the backend query engines as **Overdue**.
-- Overdue tasks render in active column lists with a pulsing neon red border and warning indicator.
-- The Dashboard Hub has an explicit "Overdue Limits" counter, and the Kanban filter has an "Overdue Only" fast filter.
+### 2. Futuristic Landing Screen & Neon Theme Customizer
+- **Translucent Welcome Hub**: Guests hit a stunning glassmorphic welcome splash page at the `/` route with glowing neon product features showcase cards, routing authenticated sessions automatically to the main dashboard.
+- **Accent Glow Theme Customizer**: Users can toggle the entire application's branding accent color dynamically between 4 cyberpunk-themed variants: *Cyber Cyan*, *Hot Rose-Violet*, *Emerald-Teal*, and *Cyberpunk Gold*. Settings coordinate CSS and JavaScript variables and are persistently cached inside `localStorage`.
 
-### 3. Chronological Organizational Activity Logs
-- Creating, editing, or deleting projects and tasks, shifting columns, and altering member configurations log an automated activity block.
-- The chronological activity stream `/activity` dynamically lists these operations with customized event icons and time markers.
+### 3. Automated Overdue Detection & Alerts
+- Any task that is past its due date and remains uncompleted is dynamically flagged by the database query pipeline as **Overdue**.
+- These cards are rendered on the Kanban board with a custom **pulsing neon-red border and warning icon** to immediately capture team attention.
+- The interactive dashboard features live overdue meters linked to explicit filter shortcuts.
 
-### 4. Interactive Task Discussion comments
-- Clicking on a Kanban task card slides open a glassmorphism context drawer.
-- The right panel contains a real-time discussion feed mapping user avatars and text bubbles.
-- Any collaborator assigned to the task's project space can instantly contribute comments using the bottom discussion text deck.
+### 4. Chronological Audit Activity Trails
+- Complete transparency: every major organizational change—such as creating projects, updating tasks, shifting board columns, or changing team configurations—logs a secure, chronological history entry.
+- The `/activity` route showcases a beautiful scroll feed of logs with customized icons and dynamic timestamps.
+
+### 5. Collaborative Discussion Comments & Progress Sliders
+- Clicking on a Kanban task slides open a glassmorphic details pane.
+- **Interactive Progress Slider**: Users or Admins can log completion rates dynamically from 0% to 100% (dragging it to 100% automatically updates the task status to Completed).
+- **Real-Time Task Chat**: Collaborative comment feed with profile bubbles allows assigned team members to share instant feedback.
+
