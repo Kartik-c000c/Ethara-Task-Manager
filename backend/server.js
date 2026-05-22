@@ -45,7 +45,7 @@ app.use(
       // Allow requests with no origin (like mobile apps or curl)
       if (!origin) return callback(null, true);
       
-      const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.up.railway.app');
+      const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.up.railway.app') || /^http:\/\/localhost(:\d+)?$/.test(origin);
       if (isAllowed) {
         callback(null, true);
       } else {
