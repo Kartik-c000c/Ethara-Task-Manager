@@ -6,6 +6,12 @@ const getBaseURL = () => {
     if (url.startsWith('VITE_API_URL=')) {
       url = url.replace('VITE_API_URL=', '');
     }
+    const cleanUrl = url.replace(/\/$/, '');
+    if (!cleanUrl.endsWith('/api')) {
+      url = cleanUrl + '/api';
+    } else {
+      url = cleanUrl;
+    }
     return url;
   }
   if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
@@ -13,6 +19,7 @@ const getBaseURL = () => {
   }
   return 'http://localhost:5000/api';
 };
+
 
 
 const api = axios.create({
