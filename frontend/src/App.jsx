@@ -11,6 +11,7 @@ import { getActiveTheme, applyTheme } from './utils/theme';
 // Import Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import TasksBoard from './pages/TasksBoard';
@@ -44,6 +45,21 @@ const DashboardLayout = ({ children }) => {
       </div>
     </div>
   );
+};
+
+// Dynamic Hub to switch between Dashboard (logged-in) and Welcome landing page (guest)
+const HomeHub = () => {
+  const { user } = useAuth();
+  
+  if (user) {
+    return (
+      <DashboardLayout>
+        <Dashboard />
+      </DashboardLayout>
+    );
+  }
+
+  return <Welcome />;
 };
 
 function App() {
@@ -94,13 +110,7 @@ function App() {
             {/* Protected SaaS Layout routes */}
             <Route
               path="/"
-              element={
-                <ProtectedRoute>
-                  <DashboardLayout>
-                    <Dashboard />
-                  </DashboardLayout>
-                </ProtectedRoute>
-              }
+              element={<HomeHub />}
             />
             <Route
               path="/projects"
