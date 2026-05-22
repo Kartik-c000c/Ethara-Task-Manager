@@ -2,8 +2,7 @@
 
 A production-ready, full-stack collaborative application featuring a modern futuristic SaaS-style UI using deep dark themes, glowing borders, glassmorphism, responsive dashboard grids, and interactive Kanban boards.
 
-🌐 **Live API Backend**: `https://ethara-task-manager-production-298a.up.railway.app/api`
-
+---
 
 ## 🛠️ Architecture & Tech Stack
 
