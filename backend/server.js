@@ -25,15 +25,39 @@ connectDB();
 // 1. Helmet to secure headers
 app.use(helmet());
 
-// 2. CORS configuration (Production Ready)
+// 2. CORS configuration (Production Ready & Highly Robust)
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:3000'
+].filter(Boolean);
+
+if (process.env.CLIENT_URL) {
+  const withoutSlash = process.env.CLIENT_URL.replace(/\/$/, '');
+  if (!allowedOrigins.includes(withoutSlash)) {
+    allowedOrigins.push(withoutSlash);
+  }
+}
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      
+      const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.up.railway.app');
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
 );
+
 
 // 3. Express Rate Limiting (Higher limit in development to prevent blocks)
 const limiter = rateLimit({
