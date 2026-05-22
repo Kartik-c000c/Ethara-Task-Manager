@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getBaseURL = () => {
   if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-    return '/api';
+    return window.location.origin + '/api';
   }
   return import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 };
